@@ -4,7 +4,7 @@
 <button class="btn btn-primary" (click)="generatePDF()">Generar Frontal</button>
 <hr />
 <br />
-<app-reverso></app-reverso>
+<app-reverso [pensionados]="pensionados"></app-reverso>
 
 <hr />
 <!-- <app-tabla></app-tabla> -->
@@ -12,5 +12,10 @@
 <hr />
 
 <!-- <app-ayuda></app-ayuda> -->
+<div>
+  <h3>Cargar archivo Excel de pensionados</h3>
+  <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" />
+</div>
+
 
 <router-outlet></router-outlet>

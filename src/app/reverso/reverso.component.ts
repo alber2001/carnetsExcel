@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Input } from '@angular/core';
 import { PlanillaPensionadosService } from '../service/planilla.service';
 import { Pensionado } from '../model/planilla.model';
 import { firmaGerencia } from '../files/firmaGerencia';
@@ -17,11 +18,13 @@ import { styles, defaultStyle } from '../config/customStyle';
   styleUrls: ['./reverso.component.css'],
 })
 export class ReversoComponent implements OnInit {
+  @Input() pensionados: Pensionado[] = [];
+
   ngOnInit() {
     this.obtenerDatosPensionados();
   }
 
-  pensionados: Pensionado[] = [];
+  //pensionados: Pensionado[] = [];
 
   constructor(private planillaService: PlanillaPensionadosService) {}
 

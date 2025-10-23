@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlanillaPensionadosService } from './service/planilla.service';
 import { Pensionado } from './model/planilla.model';
 
+import * as XLSX from 'xlsx';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from '../assets/vfs_fonts.js';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -37,6 +38,36 @@ export class AppComponent implements OnInit {
         console.error('Error al obtener los datos de pensionados', error);
       }
     );
+  }
+
+  // Dentro de tu AppComponent
+  onFileChange(event: any) {
+    const target: DataTransfer = <DataTransfer>event.target;
+    if (target.files.length !== 1) {
+      console.error('No se puede cargar más de un archivo');
+      return;
+    }
+
+    const reader: FileReader = new FileReader();
+    reader.onload = (e: any) => {
+      const bstr: string = e.target.result;
+      const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+      const wsname: string = wb.SheetNames[0];
+      const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+      const data = XLSX.utils.sheet_to_json<Pensionado>(ws, { header: 1 });
+      const [header, ...rows] = data;
+
+      this.pensionados = rows.map((row: any) => ({
+        nombre: row[1],
+        area: row[2],
+        numero_pago: row[3],
+        causa: row[0] ?? '', // <--- Aquí asignamos valor por defecto
+      }));
+
+      console.log(this.pensionados);
+    };
+    reader.readAsBinaryString(target.files[0]);
   }
 
   generatePDF() {
