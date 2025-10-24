@@ -1,21 +1,39 @@
-<div>
-  Hola mundo
+<div class="container-fluid">
+  <br />
+  <div>
+    <h1>Paso 1. Cargue su archivo de Excel:</h1>
+  </div>
+  <div class="col-5">
+    <div class="mb-3">
+      <label for="formFile" class="form-label">Seleccione un archivo:</label>
+      <input
+        class="form-control"
+        type="file"
+        id="formFile"
+        (change)="onFileChange($event)"
+        accept=".xlsx, .xls"
+      />
+    </div>
+  </div>
+
+  <div>
+    <h1>Paso 2. Genere su carnet frontal:</h1>
+  </div>
+  <button
+    class="btn btn-primary"
+    (click)="generatePDF()"
+    [disabled]="!archivoCargado"
+  >
+    Generar Frontal
+  </button>
+
+  <hr />
+  <br />
+  <div>
+    <h1>Paso 3. Genere su carnet reverso:</h1>
+  </div>
+  <app-reverso [pensionados]="pensionados" *ngIf="archivoCargado"></app-reverso>
+
+  <hr />
+  <router-outlet></router-outlet>
 </div>
-<button class="btn btn-primary" (click)="generatePDF()">Generar Frontal</button>
-<hr />
-<br />
-<app-reverso [pensionados]="pensionados"></app-reverso>
-
-<hr />
-<!-- <app-tabla></app-tabla> -->
-
-<hr />
-
-<!-- <app-ayuda></app-ayuda> -->
-<div>
-  <h3>Cargar archivo Excel de pensionados</h3>
-  <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls" />
-</div>
-
-
-<router-outlet></router-outlet>

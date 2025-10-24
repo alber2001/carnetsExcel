@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
     this.obtenerDatosPensionados();
   }
 
+  archivoCargado: boolean = false; // ✅ Nuevo
   pensionados: Pensionado[] = [];
 
   constructor(private planillaService: PlanillaPensionadosService) {}
@@ -64,7 +65,7 @@ export class AppComponent implements OnInit {
         numero_pago: row[3],
         causa: row[0] ?? '', // <--- Aquí asignamos valor por defecto
       }));
-
+      this.archivoCargado = this.pensionados.length > 0; // ✅ Se habilitan los botones
       console.log(this.pensionados);
     };
     reader.readAsBinaryString(target.files[0]);
