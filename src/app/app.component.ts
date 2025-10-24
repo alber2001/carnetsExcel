@@ -63,11 +63,16 @@ export class AppComponent implements OnInit {
         nombre: row[1],
         area: row[2],
         numero_pago: row[3],
-        causa: row[0] ?? '', // <--- Aquí asignamos valor por defecto
+        causa: row[0] ?? '',
       }));
-      this.archivoCargado = this.pensionados.length > 0; // ✅ Se habilitan los botones
+
+      // ✅ Aquí sí, después de cargar los datos
+      this.archivoCargado = this.pensionados.length > 0;
+      this.planillaService.setPensionados(this.pensionados);
+
       console.log(this.pensionados);
     };
+
     reader.readAsBinaryString(target.files[0]);
   }
 

@@ -5,11 +5,10 @@
   </div>
   <div class="col-5">
     <div class="mb-3">
-      <label for="formFile" class="form-label">Seleccione un archivo:</label>
+      <label for="formFile" class="form-label">Seleccione archivo</label>
       <input
         class="form-control"
         type="file"
-        id="formFile"
         (change)="onFileChange($event)"
         accept=".xlsx, .xls"
       />
@@ -19,21 +18,19 @@
   <div>
     <h1>Paso 2. Genere su carnet frontal:</h1>
   </div>
-  <button
-    class="btn btn-primary"
-    (click)="generatePDF()"
-    [disabled]="!archivoCargado"
-  >
+  <button class="btn btn-primary" (click)="generatePDF()" [disabled]="!archivoCargado">
     Generar Frontal
   </button>
 
   <hr />
   <br />
+
   <div>
     <h1>Paso 3. Genere su carnet reverso:</h1>
   </div>
+
+  <!-- 👇 Solo se muestra cuando hay archivo cargado -->
   <app-reverso [pensionados]="pensionados" *ngIf="archivoCargado"></app-reverso>
 
-  <hr />
   <router-outlet></router-outlet>
 </div>

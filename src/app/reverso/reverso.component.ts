@@ -20,8 +20,15 @@ import { styles, defaultStyle } from '../config/customStyle';
 export class ReversoComponent implements OnInit {
   @Input() pensionados: Pensionado[] = [];
 
+  // ngOnInit() {
+  //   this.obtenerDatosPensionados();
+  // }
+
   ngOnInit() {
-    this.obtenerDatosPensionados();
+    this.planillaService.pensionados$.subscribe((data) => {
+      this.pensionados = data;
+      console.log('Datos recibidos en reverso:', this.pensionados);
+    });
   }
 
   //pensionados: Pensionado[] = [];
@@ -40,6 +47,12 @@ export class ReversoComponent implements OnInit {
   }
 
   generatePDF() {
+    if (this.pensionados.length === 0) {
+      alert('No hay datos cargados.');
+      return;
+    }
+
+    //console.log('Datos recibidos en reverso:', this.pensionados);
     const chunks = this.chunkArray(this.pensionados, 8);
 
     const documentDefinition = {
@@ -234,4 +247,3 @@ export class ReversoComponent implements OnInit {
     return result;
   }
 }
-
